@@ -39,7 +39,7 @@ public class AppSpecificUtils {
                 queryAppender.append("&");
                 queryAppender.append(entry.getKey().toUpperCase());
                 queryAppender.append("=");
-                if(Objects.nonNull(entry.getValue())){
+                if (Objects.nonNull(entry.getValue())) {
                     queryAppender.append(entry.getValue());
                 }
             });
@@ -47,5 +47,14 @@ public class AppSpecificUtils {
             return result.substring(1, result.length());
         }
         return queryAppender.toString();
+    }
+
+    public static String getCardTypeNo(String cardNo) {
+        if (!StringUtils.isEmpty(cardNo)) {
+            if (cardNo.length() == 16) {
+                return String.valueOf(new char[]{cardNo.charAt(4), cardNo.charAt(5), cardNo.charAt(8)});
+            }
+        }
+        return null;
     }
 }
