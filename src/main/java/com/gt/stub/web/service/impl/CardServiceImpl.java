@@ -8,6 +8,7 @@ import com.gt.stub.persistence.repository.CardInfoCURDRepository;
 import com.gt.stub.web.service.CardService;
 import com.gt.stub.web.utils.TokenEncryptor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -96,6 +97,10 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public String maxCardNo() {
-        return cardRepository.findMaxCardNo();
+        String maxCardNo = cardRepository.findMaxCardNo();
+        if (StringUtils.isEmpty(maxCardNo)) {
+            maxCardNo = "0000000000000000"; //TODO provider
+        }
+        return maxCardNo;
     }
 }
