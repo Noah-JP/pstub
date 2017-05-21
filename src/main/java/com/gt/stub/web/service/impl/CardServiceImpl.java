@@ -55,22 +55,33 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public CardInfo createBy(String cardNo, CardInfo createData) {
-        return null;
+
+        createData.setCardNo(cardNo);
+
+        return cardRepository.save(createData);
     }
 
     @Override
     public CardInfo update(CardInfo updateData) {
-        return null;
+        return cardRepository.save(updateData);
     }
 
     @Override
     public CardInfo addOwner(String cardNo, Owner owner) {
+
+        CardInfo card = cardRepository.findOne(cardNo);
+
+        if (Objects.nonNull(card)) {
+            owner.setCardInfo(card);
+            card.setOwner(owner);
+            return cardRepository.save(card);
+        }
         return null;
     }
 
     @Override
     public void delete(String cardNo) {
-
+        cardRepository.delete(cardNo);
     }
 
     @Override
