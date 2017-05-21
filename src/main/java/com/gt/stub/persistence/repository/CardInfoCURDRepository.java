@@ -1,6 +1,7 @@
 package com.gt.stub.persistence.repository;
 
 import com.gt.stub.persistence.entity.CardInfo;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -8,4 +9,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface CardInfoCURDRepository extends CrudRepository<CardInfo, String> {
     CardInfo findByToken(String token);
+
+    @Query("SELECT MAX(c.cardNo) FROM CardInfo AS c")
+    String findMaxCardNo();
 }

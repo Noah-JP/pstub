@@ -93,4 +93,9 @@ public class CardServiceImpl implements CardService {
     public boolean existToken(String token) {
         return Objects.nonNull(cardRepository.findByToken(token));
     }
+
+    @Override
+    public String maxCardNo() {
+        return cardRepository.findMaxCardNo();
+    }
 }
