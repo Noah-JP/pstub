@@ -22,6 +22,6 @@ public interface CardService {
 
     boolean existToken(String token);
 
-    String maxCardNo();
+    String nextCardNo();
 
 }

@@ -43,12 +43,10 @@ public class R009ProcessExecutor extends AbstractRProcessExecutor<R009Req, R009R
 
         CardInfo cardInfo = new CardInfo();
 
-        String maxCardNo = cardService.maxCardNo();
+        String nextCardNo = cardService.nextCardNo();
 
-        String increasedCardNo = String.valueOf(Integer.valueOf(maxCardNo) + 1); // TODO need sequence provider
-
-        cardInfo.setCardNo(increasedCardNo);
-        cardInfo.setToken(encryptor.encrypt(increasedCardNo));
+        cardInfo.setCardNo(nextCardNo);
+        cardInfo.setToken(encryptor.encrypt(nextCardNo));
 
         cardInfo.setIssuedBy(IssuedBy.EC);
         cardInfo.setRegStatus(RegStatus.Registed);
@@ -82,14 +80,14 @@ public class R009ProcessExecutor extends AbstractRProcessExecutor<R009Req, R009R
             owner.setAddress3(r009Req.getAddress3());
         }
 
-        CardInfo saved = cardService.createBy(increasedCardNo, cardInfo);
+        CardInfo saved = cardService.createBy(nextCardNo, cardInfo);
 
         R009Res res = new R009Res();
         res.setSts(ProcessStatus.Success.getStatusCode());
         res.setHimopt(FormatUtils.decimalToNoFraction(BigDecimal.ZERO));
         res.setWebpt(FormatUtils.decimalToNoFraction(BigDecimal.ZERO));
         res.setCardsbt(AppSpecificUtils.getCardTypeNo(saved.getCardNo()));
-        
+
         return res;
     }
 }

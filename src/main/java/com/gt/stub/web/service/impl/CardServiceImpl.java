@@ -96,11 +96,11 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public String maxCardNo() {
+    public String nextCardNo() {
         String maxCardNo = cardRepository.findMaxCardNo();
         if (StringUtils.isEmpty(maxCardNo)) {
-            maxCardNo = "0000000000000000"; //TODO provider
+            maxCardNo = "0";//TODO provider
         }
-        return maxCardNo;
+        return String.format("%016d", Integer.valueOf(maxCardNo));
     }
 }
