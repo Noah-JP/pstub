@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 /**
  * Created by noah on 2017. 5. 21..
  */
-public class WebUtils {
+public class AppSpecificUtils {
 
     public static Map<String, String> queryToMap(String query) {
         Map<String, String> queryMap = new HashMap<>();

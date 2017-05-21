@@ -2,8 +2,7 @@ package com.gt.stub.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gt.stub.web.process.RProcessExecutor;
-import com.gt.stub.web.process.r005.R005Req;
-import com.gt.stub.web.utils.WebUtils;
+import com.gt.stub.web.utils.AppSpecificUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +44,7 @@ public class PointApiRestController {
 
         Object result = rProcessExecutor.execute(upperCaseObjectMapper.convertValue(reqParams, rProcessExecutor.getRequestType()));
 
-        String body = WebUtils.mapToQuery(upperCaseObjectMapper.convertValue(result, HashMap.class));
+        String body = AppSpecificUtils.mapToQuery(upperCaseObjectMapper.convertValue(result, HashMap.class));
 
         return ResponseEntity.ok(body);
     }
