@@ -86,6 +86,7 @@ public class R009ProcessExecutor extends AbstractRProcessExecutor<R009Req, R009R
         res.setSts(ProcessStatus.Success.getStatusCode());
         res.setHimopt(FormatUtils.decimalToNoFraction(BigDecimal.ZERO));
         res.setWebpt(FormatUtils.decimalToNoFraction(BigDecimal.ZERO));
+        res.setToken(saved.getToken());
         res.setCardsbt(AppSpecificUtils.getCardTypeNo(saved.getCardNo()));
 
         return res;
