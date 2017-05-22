@@ -4,7 +4,6 @@ import com.gt.stub.persistence.converter.BooleanConverter;
 import com.gt.stub.persistence.converter.LocalDateTimeConverter;
 import com.gt.stub.persistence.enums.IssuedBy;
 import com.gt.stub.persistence.enums.RegStatus;
-import com.gt.stub.persistence.enums.YorN;
 
 import javax.persistence.*;
 import java.io.Serializable;
