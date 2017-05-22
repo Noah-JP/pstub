@@ -49,12 +49,4 @@ public class AppSpecificUtils {
         return queryAppender.toString();
     }
 
-    public static String getCardTypeNo(String cardNo) {
-        if (!StringUtils.isEmpty(cardNo)) {
-            if (cardNo.length() == 16) {
-                return String.valueOf(new char[]{cardNo.charAt(4), cardNo.charAt(5), cardNo.charAt(8)});
-            }
-        }
-        return null;
-    }
 }

@@ -101,6 +101,6 @@ public class CardServiceImpl implements CardService {
         if (StringUtils.isEmpty(maxCardNo)) {
             maxCardNo = "0";//TODO provider
         }
-        return String.format("%016d", Integer.valueOf(maxCardNo));
+        return String.format("%016d", Integer.valueOf(maxCardNo) + 1);
     }
 }

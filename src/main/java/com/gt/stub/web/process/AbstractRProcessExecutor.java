@@ -1,5 +1,8 @@
 package com.gt.stub.web.process;
 
+import com.gt.stub.persistence.entity.CardInfo;
+import org.springframework.util.StringUtils;
+
 import java.lang.reflect.ParameterizedType;
 
 /**
@@ -32,5 +35,19 @@ public abstract class AbstractRProcessExecutor<REQ, RES extends RxxxRes> impleme
     @Override
     public Class<RES> getResponseType() {
         return this.responseType;
+    }
+
+    // TODO : create attr check strategy.
+    public String calculateTypeNo(String cardNo) {
+        if (!StringUtils.isEmpty(cardNo)) {
+            if (cardNo.length() == 16) {
+                return String.valueOf(new char[]{cardNo.charAt(4), cardNo.charAt(5), cardNo.charAt(8)});
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
+    public String checkPass(CardInfo card) {
+        return card.getMypageAuthenticated() ? PassCheck.Matched.getPassCheckCode() : PassCheck.Unmatched.getPassCheckCode();
     }
 }

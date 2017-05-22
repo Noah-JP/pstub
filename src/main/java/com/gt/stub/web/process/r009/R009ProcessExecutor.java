@@ -63,7 +63,7 @@ public class R009ProcessExecutor extends AbstractRProcessExecutor<R009Req, R009R
 
         Owner owner = new Owner();
         {
-            owner.setCardInfo(cardInfo);
+            owner.setCardNo(nextCardNo);
             owner.setNameSei(r009Req.getMembname1());
             owner.setNameMei(r009Req.getMembname2());
             owner.setNameSeiKana(r009Req.getMembnamekn1());
@@ -78,6 +78,7 @@ public class R009ProcessExecutor extends AbstractRProcessExecutor<R009Req, R009R
             owner.setAddress2(r009Req.getAddress2());
             owner.setAddress3(r009Req.getAddress3());
         }
+        cardInfo.setOwner(owner);
 
         CardInfo saved = cardService.createBy(nextCardNo, cardInfo);
 
@@ -86,7 +87,7 @@ public class R009ProcessExecutor extends AbstractRProcessExecutor<R009Req, R009R
         res.setHimopt(FormatUtils.decimalToNoFraction(BigDecimal.ZERO));
         res.setWebpt(FormatUtils.decimalToNoFraction(BigDecimal.ZERO));
         res.setToken(saved.getToken());
-        res.setCardsbt(AppSpecificUtils.getCardTypeNo(saved.getCardNo()));
+        res.setCardsbt(calculateTypeNo(saved.getCardNo()));
 
         return res;
     }

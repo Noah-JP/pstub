@@ -6,6 +6,13 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
   jpa:
     show-sql: true
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: none
     hibernate.naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+
+server:
+  port: 9898
+
+stub:
+  notmatched:
+    birthday: 20000101

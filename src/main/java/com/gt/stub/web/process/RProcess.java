@@ -4,7 +4,7 @@ package com.gt.stub.web.process;
  * Created by noah on 2017. 5. 21..
  */
 public enum RProcess {
-    MemberCheck("r005"), JoinECMember("r009"), TokenDecrypt("r014"), ReissueToken("r015");
+    MemberCheck("r005"), JoinMypage("r006"), MypageAuthentication("r006"), JoinECMember("r009"), TokenDecrypt("r014"), ReissueToken("r015");
 
     private String processNo;
 

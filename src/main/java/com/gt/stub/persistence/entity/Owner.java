@@ -8,51 +8,62 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "OWNER")
-public class Owner implements Serializable{
+public class Owner implements Serializable {
 
     @Id
-    @OneToOne
-    @JoinColumn(referencedColumnName = "CARD_NO", name = "CARD_NO")
+    @Column(name = "CARD_NO")
+    private String cardNo;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
     private CardInfo cardInfo;
 
-    @Column(name="PASSWORD")
+    @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name="NAME_SEI")
+    @Column(name = "NAME_SEI")
     private String nameSei;
 
-    @Column(name="NAME_MEI")
+    @Column(name = "NAME_MEI")
     private String nameMei;
 
-    @Column(name="NAME_SEI_KANA")
+    @Column(name = "NAME_SEI_KANA")
     private String nameSeiKana;
 
-    @Column(name="NAME_MEI_KANA")
+    @Column(name = "NAME_MEI_KANA")
     private String nameMeiKana;
 
-    @Column(name="BIRTHDAY")
+    @Column(name = "BIRTHDAY")
     private String birthday;
 
-    @Column(name="SEX")
+    @Column(name = "SEX")
     private String sex;
 
-    @Column(name="POST_NO")
+    @Column(name = "POST_NO")
     private String postNo;
 
-    @Column(name="ADDRESS1")
+    @Column(name = "ADDRESS1")
     private String address1;
 
-    @Column(name="ADDRESS2")
+    @Column(name = "ADDRESS2")
     private String address2;
 
-    @Column(name="ADDRESS3")
+    @Column(name = "ADDRESS3")
     private String address3;
 
-    @Column(name="TEL_NO")
+    @Column(name = "TEL_NO")
     private String telNo;
 
-    @Column(name="EMAIL")
+    @Column(name = "EMAIL")
     private String email;
+
+    public String getCardNo() {
+        return cardNo;
+    }
+
+    public void setCardNo(String cardNo) {
+        this.cardNo = cardNo;
+    }
 
     public CardInfo getCardInfo() {
         return cardInfo;

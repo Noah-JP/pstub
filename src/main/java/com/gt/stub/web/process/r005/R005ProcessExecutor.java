@@ -48,37 +48,31 @@ public class R005ProcessExecutor extends AbstractRProcessExecutor<R005Req, R005R
         }
 
 
-        CardInfo card;
         res.setSts(ProcessStatus.Success.getStatusCode());
-        try {
-
-            if (!StringUtils.isEmpty(token)) {
-                if (cardService.existToken(token)) {
-                    cardNo = encryptor.decrypt(token);
-                } else {
-                    res.setKaiinchk(ProcessStatus.InvalidToken.getStatusCode());
-                    return res;
-                }
+        if (!StringUtils.isEmpty(token)) {
+            if (cardService.existToken(token)) {
+                cardNo = encryptor.decrypt(token);
+            } else {
+                res.setKaiinchk(ProcessStatus.InvalidToken.getStatusCode());
+                return res;
             }
+        }
 
-            card = cardService.get(cardNo);
-
-        } catch (Exception ex) {
-
-            res.setSts(ProcessStatus.SystemError.getStatusCode());
-
+        CardInfo card = cardService.get(cardNo);
+        if (Objects.isNull(card)) {
+            res.setKaiinchk(ProcessStatus.NoData.getStatusCode());
             return res;
         }
 
-        if (Objects.isNull(card)) {
-            res.setKaiinchk(ProcessStatus.NoData.getStatusCode());
+        if (card.getTokenExpired()) {
+            res.setSts(ProcessStatus.ExpiredToken.getStatusCode());
             return res;
         }
 
         res.setTrksts(card.getRegStatus().getStatusNo());
 
         res.setKaiinchk(ProcessStatus.Success.getStatusCode());
-        res.setPasschk(card.getMypageAuthenticated() ? "0" : "1"); // TODO : validator
+        res.setPasschk(checkPass(card)); // TODO : validator
         res.setGtchk(card.getIssuedBy().getIssueNo());
 
         res.setPointzan(FormatUtils.decimalToNoFraction(card.getPoints()));
