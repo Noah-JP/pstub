@@ -13,7 +13,6 @@ import com.gt.stub.web.utils.FormatUtils;
 import com.gt.stub.web.utils.TokenEncryptor;
 import org.springframework.stereotype.Component;
 
-import javax.smartcardio.Card;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -34,7 +33,7 @@ public class R009ProcessExecutor extends AbstractRProcessExecutor<R009Req, R009R
 
     @Override
     public RProcess processName() {
-        return RProcess.RegistMember;
+        return RProcess.JoinECMember;
     }
 
     @Override
