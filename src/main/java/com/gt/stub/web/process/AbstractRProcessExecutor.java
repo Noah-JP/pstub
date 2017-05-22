@@ -5,7 +5,9 @@ import java.lang.reflect.ParameterizedType;
 /**
  * Created by noah on 2017. 5. 21..
  */
-public abstract class AbstractRProcessExecutor<REQ, RES> implements RProcessExecutor<REQ, RES> {
+public abstract class AbstractRProcessExecutor<REQ, RES extends RxxxRes> implements RProcessExecutor<REQ, RES> {
+
+    public static final String POINT_ID = "00001";
 
     Class<REQ> requestType;
     Class<RES> responseType;
