@@ -2,6 +2,7 @@ package com.gt.stub.web.process.r007;
 
 import com.gt.stub.persistence.entity.CardInfo;
 import com.gt.stub.persistence.entity.Owner;
+import com.gt.stub.persistence.enums.RegStatus;
 import com.gt.stub.web.process.AbstractRProcessExecutor;
 import com.gt.stub.web.process.PassCheck;
 import com.gt.stub.web.process.ProcessStatus;
@@ -65,19 +66,22 @@ public class R007ProcessExecutor extends AbstractRProcessExecutor<R007Req, R007R
             return res;
         }
 
-        Owner owner = card.getOwner();
-        if (Objects.isNull(owner)) {
+        if (RegStatus.Blank.equals(card.getRegStatus())) {
             res.setSts(ProcessStatus.Blank.getStatusCode());
             return res;
         }
 
-        if (!card.getMypageAuthenticated()) {
+        if (RegStatus.Unregisted.equals(card.getRegStatus())) {
             res.setSts(ProcessStatus.Unregisted.getStatusCode());
             return res;
         }
 
+        Owner owner = card.getOwner();
         Boolean matched = owner.getPassword().equals(r007Req.getAuthkey());
         res.setPasschk(matched ? PassCheck.Matched.getPassCheckCode() : PassCheck.Unmatched.getPassCheckCode());
+
+        card.setMypageAuthenticated(true);
+        cardService.update(card);
 
         return res;
     }
