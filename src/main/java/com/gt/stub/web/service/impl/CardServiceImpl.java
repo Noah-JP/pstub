@@ -4,7 +4,7 @@ import com.gt.stub.persistence.entity.CardInfo;
 import com.gt.stub.persistence.entity.Owner;
 import com.gt.stub.persistence.enums.IssuedBy;
 import com.gt.stub.persistence.enums.RegStatus;
-import com.gt.stub.persistence.repository.CardInfoCURDRepository;
+import com.gt.stub.persistence.repository.CardInfoCRUDRepository;
 import com.gt.stub.web.service.CardService;
 import com.gt.stub.web.utils.TokenEncryptor;
 import org.springframework.stereotype.Service;
@@ -20,10 +20,10 @@ import java.util.Objects;
 @Service
 public class CardServiceImpl implements CardService {
 
-    private CardInfoCURDRepository cardRepository;
+    private CardInfoCRUDRepository cardRepository;
     private TokenEncryptor encryptor;
 
-    CardServiceImpl(CardInfoCURDRepository cardRepository, TokenEncryptor encryptor) {
+    CardServiceImpl(CardInfoCRUDRepository cardRepository, TokenEncryptor encryptor) {
         this.cardRepository = cardRepository;
         this.encryptor = encryptor;
     }
