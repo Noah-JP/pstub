@@ -10,7 +10,5 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class R015Res extends RxxxRes {
-    private String pointid;
-    private String kaiinno;
     private String token;
 }
