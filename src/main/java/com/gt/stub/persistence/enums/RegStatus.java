@@ -4,7 +4,7 @@ package com.gt.stub.persistence.enums;
  * Created by noah on 2017. 5. 20..
  */
 public enum RegStatus {
-    Blank("05"), Unregisted("06"), Registed("07");
+    Blank("05"), Unregistered("06"), Registered("07");
 
     private String statusNo;
 

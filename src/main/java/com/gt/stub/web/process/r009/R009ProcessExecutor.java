@@ -8,7 +8,6 @@ import com.gt.stub.web.process.AbstractRProcessExecutor;
 import com.gt.stub.web.process.ProcessStatus;
 import com.gt.stub.web.process.RProcess;
 import com.gt.stub.web.service.CardService;
-import com.gt.stub.web.utils.AppSpecificUtils;
 import com.gt.stub.web.utils.FormatUtils;
 import com.gt.stub.web.utils.TokenEncryptor;
 import org.springframework.stereotype.Component;
@@ -48,7 +47,7 @@ public class R009ProcessExecutor extends AbstractRProcessExecutor<R009Req, R009R
         cardInfo.setToken(encryptor.encrypt(nextCardNo));
 
         cardInfo.setIssuedBy(IssuedBy.EC);
-        cardInfo.setRegStatus(RegStatus.Registed);
+        cardInfo.setRegStatus(RegStatus.Registered);
 
         cardInfo.setPoints(BigDecimal.ZERO);
         cardInfo.setIssuedDateOfPoints(now);

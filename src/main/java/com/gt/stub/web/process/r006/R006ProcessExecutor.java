@@ -95,7 +95,7 @@ public class R006ProcessExecutor extends AbstractRProcessExecutor<R006Req, R006R
 
         cardInfo.setOwner(owner);
         cardInfo.setMypageAuthenticated(true);
-        cardInfo.setRegStatus(RegStatus.Registed);
+        cardInfo.setRegStatus(RegStatus.Registered);
 
         cardService.update(cardInfo);
 

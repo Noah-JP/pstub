@@ -8,6 +8,7 @@ import com.gt.stub.web.process.RProcess;
 import com.gt.stub.web.service.CardService;
 import com.gt.stub.web.utils.FormatUtils;
 import com.gt.stub.web.utils.TokenEncryptor;
+import jdk.nashorn.internal.parser.Token;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -20,10 +21,12 @@ import java.util.Objects;
 public class R011ProcessExecutor extends AbstractRProcessExecutor<R011Req, R011Res> {
 
     private CardService cardService;
+    private TokenEncryptor encryptor;
 
-    R011ProcessExecutor(CardService cardService) {
+    R011ProcessExecutor(CardService cardService, TokenEncryptor encryptor) {
         super();
         this.cardService = cardService;
+        this.encryptor = encryptor;
     }
 
     @Override
@@ -60,6 +63,13 @@ public class R011ProcessExecutor extends AbstractRProcessExecutor<R011Req, R011R
             res.setSts(ProcessStatus.NegativeToken.getStatusCode()); // TODO check invalidToken
             return res;
         }
+
+        {// change old target status -> My page authenticated : false
+            CardInfo oldCard = cardService.get(encryptor.decrypt(token));
+            oldCard.setMypageAuthenticated(false);
+            cardService.update(oldCard);
+        }
+
 
         res.setCardsbt(calculateTypeNo(updateTarget.getCardNo()));
         res.setToken(updateTarget.getToken());

@@ -73,7 +73,7 @@ public class R013ProcessExecutor extends AbstractRProcessExecutor<R013Req, R013R
         }
         issuedBlankCard.setOwner(owner);
 
-        issuedBlankCard.setRegStatus(RegStatus.Registed);
+        issuedBlankCard.setRegStatus(RegStatus.Registered);
         issuedBlankCard.setMypageAuthenticated(true);
         issuedBlankCard.setIssuedBy(IssuedBy.EC);
 

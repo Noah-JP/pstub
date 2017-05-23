@@ -37,8 +37,8 @@ public class PointApiRestController {
     @PostMapping(path = {"/{processNo}", "/{processNo}/{ip}"}, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity process(@PathVariable String processNo, @PathVariable(required = false) String ip, @RequestParam Map<String, String> reqParams) {
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(String.format("processNo = [%s], ip = [%s]", processNo, ip));
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(String.format("processNo = [%s], ip = [%s]", processNo, ip));
         }
 
         Optional<RProcessExecutor> filteredExecutor = executors.stream()
@@ -46,7 +46,6 @@ public class PointApiRestController {
                 .findFirst();
 
         if (!filteredExecutor.isPresent()) {
-
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
@@ -56,6 +55,9 @@ public class PointApiRestController {
         try {
             result = rProcessExecutor.execute(upperCaseObjectMapper.convertValue(reqParams, rProcessExecutor.getRequestType()));
         } catch (Exception ex) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error("Server Error...", ex);
+            }
 
             try {
 
@@ -63,8 +65,10 @@ public class PointApiRestController {
                 result.setSts(ProcessStatus.SystemError.getStatusCode());
 
             } catch (Exception e) {
-                LOGGER.error("Unexpected Error...", e);
-                return ResponseEntity.status(HttpStatus.NOT_EXTENDED).build();
+                if (LOGGER.isErrorEnabled()) {
+                    LOGGER.error("Unexpected Error...", e);
+                }
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }
         }
         String body = AppSpecificUtils.mapToQuery(upperCaseObjectMapper.convertValue(result, HashMap.class));

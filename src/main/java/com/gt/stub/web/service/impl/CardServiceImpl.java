@@ -1,7 +1,6 @@
 package com.gt.stub.web.service.impl;
 
 import com.gt.stub.persistence.entity.CardInfo;
-import com.gt.stub.persistence.entity.Owner;
 import com.gt.stub.persistence.enums.IssuedBy;
 import com.gt.stub.persistence.enums.RegStatus;
 import com.gt.stub.persistence.repository.CardInfoCRUDRepository;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -20,6 +20,7 @@ import java.util.Objects;
 @Service
 public class CardServiceImpl implements CardService {
 
+    public static final DecimalFormat CARD_NO_FORMAT = new DecimalFormat("0000000000000000");
     private CardInfoCRUDRepository cardRepository;
     private TokenEncryptor encryptor;
 
@@ -88,6 +89,7 @@ public class CardServiceImpl implements CardService {
         if (StringUtils.isEmpty(maxCardNo)) {
             maxCardNo = "0";//TODO provider
         }
-        return String.format("%016d", Integer.valueOf(maxCardNo) + 1);
+        BigDecimal nextCardNo = new BigDecimal(maxCardNo).add(BigDecimal.ONE);
+        return CARD_NO_FORMAT.format(nextCardNo);
     }
 }

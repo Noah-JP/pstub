@@ -10,7 +10,6 @@ import com.gt.stub.web.process.ProcessStatus;
 import com.gt.stub.web.process.RProcess;
 import com.gt.stub.web.service.CardService;
 import com.gt.stub.web.utils.FormatUtils;
-import com.gt.stub.web.utils.TokenEncryptor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -55,12 +54,12 @@ public class R008ProcessExecutor extends AbstractRProcessExecutor<R008Req, R008R
             return res;
         }
 
-        if(RegStatus.Unregisted.equals(card.getRegStatus())){
+        if(RegStatus.Unregistered.equals(card.getRegStatus())){
             res.setSts(ProcessStatus.Unregisted.getStatusCode());
             return res;
         }
 
-        if(RegStatus.Registed.equals(card.getRegStatus())){
+        if(RegStatus.Registered.equals(card.getRegStatus())){
             res.setSts(ProcessStatus.Registed.getStatusCode());
             return res;
         }
@@ -88,7 +87,7 @@ public class R008ProcessExecutor extends AbstractRProcessExecutor<R008Req, R008R
             owner.setAddress3(r008Req.getAddress3());
         }
 
-        card.setRegStatus(RegStatus.Unregisted);
+        card.setRegStatus(RegStatus.Unregistered);
         card.setMypageAuthenticated(false);
         card.setOwner(owner);
 

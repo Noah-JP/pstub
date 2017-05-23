@@ -56,12 +56,12 @@ public class R012ProcessExecutor extends AbstractRProcessExecutor<R012Req, R012R
             return res;
         }
 
-        if (RegStatus.Unregisted.equals(updateTarget.getRegStatus())) {
+        if (RegStatus.Unregistered.equals(updateTarget.getRegStatus())) {
             res.setSts(ProcessStatus.Unregisted.getStatusCode());
             return res;
         }
 
-        if (RegStatus.Registed.equals(updateTarget.getRegStatus())) {
+        if (RegStatus.Registered.equals(updateTarget.getRegStatus())) {
             res.setSts(ProcessStatus.Registed.getStatusCode());
             return res;
         }
@@ -94,7 +94,7 @@ public class R012ProcessExecutor extends AbstractRProcessExecutor<R012Req, R012R
             owner.setAddress3(r012Req.getAddress3());
         }
 
-        updateTarget.setRegStatus(RegStatus.Unregisted);
+        updateTarget.setRegStatus(RegStatus.Unregistered);
         updateTarget.setMypageAuthenticated(false);
         updateTarget.setOwner(owner);
 
