@@ -1,7 +1,8 @@
 package com.gt.stub.web.data;
 
-import com.gt.stub.persistence.entity.CardInfo;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * Created by noah on 2017. 5. 20..
@@ -11,5 +12,6 @@ public class ApiResultData {
 
     private Boolean success;
     private String message;
-    private CardInfo data;
+    private List<SavedCardData> result;
+
 }
