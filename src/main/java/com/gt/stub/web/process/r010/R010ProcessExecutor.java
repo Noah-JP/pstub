@@ -23,12 +23,10 @@ import java.util.Objects;
 public class R010ProcessExecutor extends AbstractRProcessExecutor<R010Req,R010Res> {
 
     private CardService cardService;
-    private TokenEncryptor encryptor;
 
-    R010ProcessExecutor(CardService cardService, TokenEncryptor encryptor) {
+    R010ProcessExecutor(CardService cardService) {
         super();
         this.cardService = cardService;
-        this.encryptor = encryptor;
     }
 
     @Override

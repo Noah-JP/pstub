@@ -22,11 +22,9 @@ public class SupportApiRestController {
     public static final Logger LOGGER = LoggerFactory.getLogger(SupportApiRestController.class);
 
     private CardService cardService;
-    private ObjectMapper objectMapper;
 
-    SupportApiRestController(CardService cardService, ObjectMapper objectMapper) {
+    SupportApiRestController(CardService cardService) {
         this.cardService = cardService;
-        this.objectMapper = objectMapper;
     }
 
 

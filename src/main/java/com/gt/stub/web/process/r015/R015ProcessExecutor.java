@@ -20,7 +20,6 @@ public class R015ProcessExecutor extends AbstractRProcessExecutor<R015Req, R015R
     private CardService cardService;
     private TokenEncryptor encryptor;
 
-
     R015ProcessExecutor(CardService cardService, TokenEncryptor encryptor) {
         super();
         this.cardService = cardService;

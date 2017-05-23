@@ -10,7 +10,6 @@ import com.gt.stub.web.process.ProcessStatus;
 import com.gt.stub.web.process.RProcess;
 import com.gt.stub.web.service.CardService;
 import com.gt.stub.web.utils.FormatUtils;
-import com.gt.stub.web.utils.TokenEncryptor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -23,12 +22,10 @@ import java.util.Objects;
 public class R012ProcessExecutor extends AbstractRProcessExecutor<R012Req, R012Res> {
 
     private CardService cardService;
-    private TokenEncryptor encryptor;
 
-    R012ProcessExecutor(CardService cardService, TokenEncryptor encryptor) {
+    R012ProcessExecutor(CardService cardService) {
         super();
         this.cardService = cardService;
-        this.encryptor = encryptor;
     }
 
     @Override

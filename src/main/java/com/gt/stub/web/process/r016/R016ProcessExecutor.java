@@ -19,11 +19,8 @@ import java.util.Objects;
 @Component
 public class R016ProcessExecutor extends AbstractRProcessExecutor<R016Req, R016Res> {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(R016ProcessExecutor.class);
-
     private CardService cardService;
     private TokenEncryptor encryptor;
-
 
     R016ProcessExecutor(CardService cardService, TokenEncryptor encryptor) {
         super();
