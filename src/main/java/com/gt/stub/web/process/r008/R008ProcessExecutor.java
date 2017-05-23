@@ -5,6 +5,7 @@ import com.gt.stub.persistence.entity.Owner;
 import com.gt.stub.persistence.enums.IssuedBy;
 import com.gt.stub.persistence.enums.RegStatus;
 import com.gt.stub.web.process.AbstractRProcessExecutor;
+import com.gt.stub.web.process.AttributeRegisterStatus;
 import com.gt.stub.web.process.ProcessStatus;
 import com.gt.stub.web.process.RProcess;
 import com.gt.stub.web.service.CardService;
@@ -42,7 +43,7 @@ public class R008ProcessExecutor extends AbstractRProcessExecutor<R008Req, R008R
 
         R008Res res = new R008Res();
         res.setSts(ProcessStatus.Success.getStatusCode());
-        res.setZkstrkkekka("0"); // Incomplete registration.
+        res.setZkstrkkekka(AttributeRegisterStatus.Incomplete.getStatusCode());
 
         String cardNo = r008Req.getKaiinno();
         if (StringUtils.isEmpty(cardNo)) {
@@ -98,7 +99,7 @@ public class R008ProcessExecutor extends AbstractRProcessExecutor<R008Req, R008R
         res.setToken(updated.getToken());
         res.setCardsbt(calculateTypeNo(updated.getCardNo()));
         res.setHimopt(FormatUtils.decimalToNoFraction(BigDecimal.ZERO));
-        res.setZkstrkkekka("1"); // Complete registration.
+        res.setZkstrkkekka(AttributeRegisterStatus.Complete.getStatusCode());
         
 
         return res;
