@@ -14,8 +14,6 @@ public interface CardService {
 
     CardInfo update(CardInfo updateData);
 
-    CardInfo addOwner(String cardNo, Owner owner);
-
     void delete(String cardNo);
 
     CardInfo get(String cardNo);
