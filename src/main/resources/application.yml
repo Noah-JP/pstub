@@ -6,7 +6,7 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
   jpa:
     show-sql: true
-    hibernate.ddl-auto: none
+    hibernate.ddl-auto: validate
     hibernate.naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
 
@@ -16,3 +16,24 @@ server:
 stub:
   notmatched:
     birthday: 20000101
+
+flyway:
+  locations: db/migration
+
+---
+spring:
+    profiles: LOCAL
+flyway:
+  locations: local/db/migration
+
+---
+spring:
+    profiles: DEV1
+flyway:
+  locations: dev1/db/migration
+
+---
+spring:
+    profiles: DEV2
+flyway:
+  locations: dev2/db/migration
