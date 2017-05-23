@@ -10,8 +10,6 @@ import java.lang.reflect.ParameterizedType;
  */
 public abstract class AbstractRProcessExecutor<REQ, RES extends RxxxRes> implements RProcessExecutor<REQ, RES> {
 
-    public static final String POINT_ID = "00001";
-
     Class<REQ> requestType;
     Class<RES> responseType;
 
