@@ -60,6 +60,10 @@ public class CardInfo implements Serializable {
     @Convert(converter = BooleanConverter.class)
     private Boolean mypageAuthenticated;
 
+    @Column(name = "WITHDRAW", nullable = false)
+    @Convert(converter = BooleanConverter.class)
+    private Boolean withdraw;
+
 
     public String getCardNo() {
         return cardNo;
@@ -155,5 +159,13 @@ public class CardInfo implements Serializable {
 
     public void setMypageAuthenticated(Boolean mypageAuthenticated) {
         this.mypageAuthenticated = mypageAuthenticated;
+    }
+
+    public Boolean getWithdraw() {
+        return withdraw;
+    }
+
+    public void setWithdraw(Boolean withdraw) {
+        this.withdraw = withdraw;
     }
 }

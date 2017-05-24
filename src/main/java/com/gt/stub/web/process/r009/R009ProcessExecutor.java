@@ -37,32 +37,17 @@ public class R009ProcessExecutor extends AbstractRProcessExecutor<R009Req, R009R
 
     @Override
     protected R009Res process(R009Req r009Req) {
-        LocalDateTime now = LocalDateTime.now();
-
-        CardInfo cardInfo = new CardInfo();
 
         String nextCardNo = cardService.nextCardNo();
 
-        cardInfo.setCardNo(nextCardNo);
-        cardInfo.setToken(encryptor.encrypt(nextCardNo));
-
+        CardInfo cardInfo = cardService.createBlank(nextCardNo);
         cardInfo.setIssuedBy(IssuedBy.EC);
         cardInfo.setRegStatus(RegStatus.Registered);
-
-        cardInfo.setPoints(BigDecimal.ZERO);
-        cardInfo.setIssuedDateOfPoints(now);
-
-        cardInfo.setExpiringPoints(BigDecimal.ZERO);
-        cardInfo.setExpiringDateOfPoints(now);
-
-        cardInfo.setRank(Integer.valueOf(0));
-
-        cardInfo.setTokenExpired(false);
         cardInfo.setMypageAuthenticated(true);
 
         Owner owner = new Owner();
         {
-            owner.setCardNo(nextCardNo);
+            owner.setCardNo(cardInfo.getCardNo());
             owner.setNameSei(r009Req.getMembname1());
             owner.setNameMei(r009Req.getMembname2());
             owner.setNameSeiKana(r009Req.getMembnamekn1());
@@ -79,7 +64,7 @@ public class R009ProcessExecutor extends AbstractRProcessExecutor<R009Req, R009R
         }
         cardInfo.setOwner(owner);
 
-        CardInfo saved = cardService.createBy(nextCardNo, cardInfo);
+        CardInfo saved = cardService.update(cardInfo);
 
         R009Res res = new R009Res();
         res.setSts(ProcessStatus.Success.getStatusCode());

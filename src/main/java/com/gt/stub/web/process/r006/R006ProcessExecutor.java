@@ -3,6 +3,7 @@ package com.gt.stub.web.process.r006;
 import com.gt.stub.persistence.entity.CardInfo;
 import com.gt.stub.persistence.entity.Owner;
 import com.gt.stub.persistence.enums.RegStatus;
+import com.gt.stub.web.holder.CardProperties;
 import com.gt.stub.web.process.AbstractRProcessExecutor;
 import com.gt.stub.web.process.ProcessStatus;
 import com.gt.stub.web.process.RProcess;
@@ -20,16 +21,19 @@ import java.util.Objects;
 @Component
 public class R006ProcessExecutor extends AbstractRProcessExecutor<R006Req, R006Res> {
 
+
     @Value("${stub.notmatched.birthday:20000101}")
     private String notMatchedBirthDay;
 
+    private CardProperties cardProperties;
     private CardService cardService;
     private TokenEncryptor encryptor;
 
-    R006ProcessExecutor(CardService cardService, TokenEncryptor encryptor) {
+    R006ProcessExecutor(CardService cardService, TokenEncryptor encryptor, CardProperties cardProperties) {
         super();
         this.cardService = cardService;
         this.encryptor = encryptor;
+        this.cardProperties = cardProperties;
     }
 
     @Override
@@ -72,8 +76,8 @@ public class R006ProcessExecutor extends AbstractRProcessExecutor<R006Req, R006R
             return res;
         }
 
-        if(cardInfo.getMypageAuthenticated()){
-            res.setSts(ProcessStatus.Registed.getStatusCode());
+        if (cardInfo.getMypageAuthenticated()) {
+            res.setSts(ProcessStatus.Registered.getStatusCode());
             return res;
         }
 

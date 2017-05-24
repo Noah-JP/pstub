@@ -57,12 +57,12 @@ public class R012ProcessExecutor extends AbstractRProcessExecutor<R012Req, R012R
         }
 
         if (RegStatus.Unregistered.equals(updateTarget.getRegStatus())) {
-            res.setSts(ProcessStatus.Unregisted.getStatusCode());
+            res.setSts(ProcessStatus.Unregistered.getStatusCode());
             return res;
         }
 
         if (RegStatus.Registered.equals(updateTarget.getRegStatus())) {
-            res.setSts(ProcessStatus.Registed.getStatusCode());
+            res.setSts(ProcessStatus.Registered.getStatusCode());
             return res;
         }
 

@@ -42,6 +42,7 @@ public class R005ProcessExecutor extends AbstractRProcessExecutor<R005Req, R005R
         R005Res res = new R005Res();
         res.setKaiinno(cardNo);
         res.setToken(token);
+        res.setKaiinchk(ProcessStatus.Success.getStatusCode());
         if (StringUtils.isEmpty(cardNo) && StringUtils.isEmpty(token)) {
             res.setSts(ProcessStatus.NegativeRequest.getStatusCode());
             return res;
@@ -64,14 +65,18 @@ public class R005ProcessExecutor extends AbstractRProcessExecutor<R005Req, R005R
             return res;
         }
 
+        if (card.getWithdraw()) {
+            res.setKaiinchk(ProcessStatus.Withdraw.getStatusCode());
+            return res;
+        }
+
         if (card.getTokenExpired()) {
-            res.setSts(ProcessStatus.ExpiredToken.getStatusCode());
+            res.setKaiinchk(ProcessStatus.ExpiredToken.getStatusCode());
             return res;
         }
 
         res.setTrksts(card.getRegStatus().getStatusNo());
 
-        res.setKaiinchk(ProcessStatus.Success.getStatusCode());
         res.setPasschk(checkPass(card)); // TODO : validator
         res.setGtchk(card.getIssuedBy().getIssueNo());
 

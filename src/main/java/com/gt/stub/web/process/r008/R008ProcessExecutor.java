@@ -55,12 +55,12 @@ public class R008ProcessExecutor extends AbstractRProcessExecutor<R008Req, R008R
         }
 
         if(RegStatus.Unregistered.equals(card.getRegStatus())){
-            res.setSts(ProcessStatus.Unregisted.getStatusCode());
+            res.setSts(ProcessStatus.Unregistered.getStatusCode());
             return res;
         }
 
         if(RegStatus.Registered.equals(card.getRegStatus())){
-            res.setSts(ProcessStatus.Registed.getStatusCode());
+            res.setSts(ProcessStatus.Registered.getStatusCode());
             return res;
         }
         

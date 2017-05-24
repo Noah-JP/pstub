@@ -4,7 +4,9 @@ import com.gt.stub.persistence.entity.CardInfo;
 import com.gt.stub.persistence.enums.IssuedBy;
 import com.gt.stub.persistence.enums.RegStatus;
 import com.gt.stub.persistence.repository.CardInfoCRUDRepository;
+import com.gt.stub.web.holder.CardProperties;
 import com.gt.stub.web.service.CardService;
+import com.gt.stub.web.utils.FormatUtils;
 import com.gt.stub.web.utils.TokenEncryptor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -23,15 +25,17 @@ public class CardServiceImpl implements CardService {
     public static final DecimalFormat CARD_NO_FORMAT = new DecimalFormat("0000000000000000");
     private CardInfoCRUDRepository cardRepository;
     private TokenEncryptor encryptor;
+    private CardProperties cardProperties;
 
-    CardServiceImpl(CardInfoCRUDRepository cardRepository, TokenEncryptor encryptor) {
+    CardServiceImpl(CardInfoCRUDRepository cardRepository, TokenEncryptor encryptor, CardProperties cardProperties) {
         this.cardRepository = cardRepository;
         this.encryptor = encryptor;
+        this.cardProperties = cardProperties;
     }
 
     @Override
     public CardInfo createBlank(String cardNo) {
-        LocalDateTime now = LocalDateTime.now();
+
 
         CardInfo cardInfo = new CardInfo();
 
@@ -41,16 +45,20 @@ public class CardServiceImpl implements CardService {
         cardInfo.setIssuedBy(IssuedBy.ETC);
         cardInfo.setRegStatus(RegStatus.Blank);
 
-        cardInfo.setPoints(BigDecimal.ZERO);
+        CardProperties.Point point = cardProperties.getPoint();
+        LocalDateTime now = LocalDateTime.now();
         cardInfo.setIssuedDateOfPoints(now);
+        cardInfo.setPoints(new BigDecimal(point.getAmount()));
 
-        cardInfo.setExpiringPoints(BigDecimal.ZERO);
-        cardInfo.setExpiringDateOfPoints(now);
+        LocalDateTime expirationDate = LocalDateTime.parse(point.getExpirationDate(), FormatUtils.DATE_YYYYMMDDHHMMSS);
+        cardInfo.setExpiringDateOfPoints(expirationDate);
+        cardInfo.setExpiringPoints(new BigDecimal(point.getExpirationAmount()));
 
         cardInfo.setRank(Integer.valueOf(0));
 
         cardInfo.setTokenExpired(false);
         cardInfo.setMypageAuthenticated(false);
+        cardInfo.setWithdraw(false);
 
         return cardRepository.save(cardInfo);
     }

@@ -72,7 +72,7 @@ public class R007ProcessExecutor extends AbstractRProcessExecutor<R007Req, R007R
         }
 
         if (RegStatus.Unregistered.equals(card.getRegStatus())) {
-            res.setSts(ProcessStatus.Unregisted.getStatusCode());
+            res.setSts(ProcessStatus.Unregistered.getStatusCode());
             return res;
         }
 
