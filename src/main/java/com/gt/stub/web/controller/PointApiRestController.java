@@ -38,7 +38,7 @@ public class PointApiRestController {
     public ResponseEntity process(@PathVariable String processNo, @PathVariable(required = false) String ip, @RequestParam Map<String, String> reqParams) {
 
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info(String.format("processNo = [%s], ip = [%s]", processNo, ip));
+            LOGGER.info(String.format("RECEIVE REQUEST [%s][%s] : %s", processNo, ip, AppSpecificUtils.mapToQuery(reqParams)));
         }
 
         Optional<RProcessExecutor> filteredExecutor = executors.stream()
@@ -46,6 +46,9 @@ public class PointApiRestController {
                 .findFirst();
 
         if (!filteredExecutor.isPresent()) {
+            if (LOGGER.isErrorEnabled()) {
+                LOGGER.error(String.format("Not found process  pid= [%s], ip = [%s]", processNo, ip));
+            }
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
@@ -56,23 +59,24 @@ public class PointApiRestController {
             result = rProcessExecutor.execute(upperCaseObjectMapper.convertValue(reqParams, rProcessExecutor.getRequestType()));
         } catch (Exception ex) {
             if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Server Error...", ex);
+                LOGGER.error(String.format("Server Error...  pid= [%s], ip = [%s]", processNo, ip), ex);
             }
 
             try {
-
                 result = (RxxxRes) rProcessExecutor.getResponseType().newInstance();
                 result.setSts(ProcessStatus.SystemError.getStatusCode());
 
             } catch (Exception e) {
                 if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("Unexpected Error...", e);
+                    LOGGER.error(String.format("Unexpected Error...  pid= [%s], ip = [%s]", processNo, ip) , e);
                 }
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
             }
         }
         String body = AppSpecificUtils.mapToQuery(upperCaseObjectMapper.convertValue(result, HashMap.class));
-
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(String.format("SEND RESPONSE   [%s][%s] : %s", processNo, ip, body));
+        }
         return ResponseEntity.ok(body);
     }
 

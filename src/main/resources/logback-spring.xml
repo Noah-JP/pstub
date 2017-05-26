@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE logback>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+    <property name="logname" value="pstub" />
+
+    <!--ログレベル設定開発用 -->
+    <springProfile name="DEV1">
+        <property name="logpath" value="/tmp/log/" />
+        <!--ログレベル -->
+        <property name="LOG_LEVEL" value="INFO" />
+        <property name="BATCH_LOG_LEVEL" value="INFO" />
+    </springProfile>
+
+    <!--ログレベル設定本番用 -->
+    <springProfile name="IT2">
+        <property name="logpath" value="/tmp/log/" />
+        <!--ログレベル -->
+        <property name="LOG_LEVEL" value="INFO" />
+        <property name="BATCH_LOG_LEVEL" value="INFO" />
+    </springProfile>
+
+    <springProfile name="VALID">
+        <property name="logpath" value="/tmp/log/" />
+        <!--ログレベル -->
+        <property name="LOG_LEVEL" value="INFO" />
+        <property name="BATCH_LOG_LEVEL" value="INFO" />
+    </springProfile>
+
+    <timestamp key="fileTimestamp" datePattern="yyyy-MM-dd"/>
+
+    <!--出力ルール～WEB～ -->
+    <!--場合によってはファイルサイズごとのRollに変更する -->
+    <appender name="FILE_WEB"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日ごとにログファイル作成 -->
+        <file>${logpath}${logname}-${fileTimestamp}.log</file>
+        <!--日ごとにログファイル作成 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日付けが変わったら年月フォルダ内にzipファイル作成 -->
+            <fileNamePattern>${logpath}%d{yyyyMM,aux}/${logname}-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <!--180日後に破棄 -->
+            <maxHistory>180</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <!--出力内容 -->
+            <pattern>%d{yyyy/MM/dd HH:mm:ss}\t%-5level\t%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--rootログレベルと使用出力ルール -->
+    <root level="${LOG_LEVEL}">
+        <appender-ref ref="FILE_WEB" />
+    </root>
+
+</configuration>

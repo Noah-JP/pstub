@@ -22,7 +22,7 @@ stub:
   create_amount: 100 #max 999
 card:
   point:
-    amount: 1000 # only number
+    amount: 20000 # only number
     expiration_date: 20180403000000 # format yyyyMMddHHmmss
     expiration_amount: 0 # only number
   password: GT20170524
@@ -40,7 +40,6 @@ spring:
     password: stubad
     driverClassName: com.mysql.jdbc.Driver
   jpa:
-    hibernate.ddl-auto: validate
     properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
 
 ---

@@ -34,7 +34,7 @@ public class AppSpecificUtils {
 
     public static String mapToQuery(Map<String, String> queryMap) {
         StringBuilder queryAppender = new StringBuilder();
-        if (Objects.nonNull(queryMap)) {
+        if (Objects.nonNull(queryMap) && !queryMap.isEmpty()) {
             queryMap.entrySet().stream().forEach(entry -> {
                 queryAppender.append("&");
                 queryAppender.append(entry.getKey().toUpperCase());
